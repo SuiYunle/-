@@ -1,0 +1,207 @@
+{
+  "name": "中医知识库",
+  "description": "中医知识图谱，包含中医基础理论、问诊方法、常见病症、辨证论治、体质养生等内容",
+  "nodes": [
+    {
+      "id": "1",
+      "label": "中医基础理论",
+      "type": "category",
+      "children": [
+        {
+          "id": "1.1",
+          "label": "哲学基础",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.1.1", "label": "精气学说", "type": "concept"},
+            {"id": "1.1.2", "label": "阴阳学说", "type": "concept"},
+            {"id": "1.1.3", "label": "五行学说", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.2",
+          "label": "藏象学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.2.1", "label": "五脏", "type": "concept"},
+            {"id": "1.2.2", "label": "六腑", "type": "concept"},
+            {"id": "1.2.3", "label": "奇恒之腑", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.3",
+          "label": "精气血津液学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.3.1", "label": "精", "type": "concept"},
+            {"id": "1.3.2", "label": "气", "type": "concept"},
+            {"id": "1.3.3", "label": "血", "type": "concept"},
+            {"id": "1.3.4", "label": "津液", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.4",
+          "label": "经络学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.4.1", "label": "十二经脉", "type": "concept"},
+            {"id": "1.4.2", "label": "奇经八脉", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.5",
+          "label": "体质学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.5.1", "label": "平和质", "type": "concept"},
+            {"id": "1.5.2", "label": "气虚质", "type": "concept"},
+            {"id": "1.5.3", "label": "阳虚质", "type": "concept"},
+            {"id": "1.5.4", "label": "阴虚质", "type": "concept"},
+            {"id": "1.5.5", "label": "痰湿质", "type": "concept"},
+            {"id": "1.5.6", "label": "湿热质", "type": "concept"},
+            {"id": "1.5.7", "label": "血瘀质", "type": "concept"},
+            {"id": "1.5.8", "label": "气郁质", "type": "concept"},
+            {"id": "1.5.9", "label": "特禀质", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.6",
+          "label": "病因学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.6.1", "label": "六淫", "type": "concept"},
+            {"id": "1.6.2", "label": "七情", "type": "concept"},
+            {"id": "1.6.3", "label": "其他病因", "type": "concept"}
+          ]
+        },
+        {
+          "id": "1.7",
+          "label": "病机学说",
+          "type": "subcategory",
+          "children": [
+            {"id": "1.7.1", "label": "阴阳失调", "type": "concept"},
+            {"id": "1.7.2", "label": "邪正盛衰", "type": "concept"},
+            {"id": "1.7.3", "label": "气机失常", "type": "concept"},
+            {"id": "1.7.4", "label": "津液代谢失常", "type": "concept"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "label": "中医问诊方法",
+      "type": "category",
+      "children": [
+        {"id": "2.1", "label": "望诊", "type": "concept"},
+        {"id": "2.2", "label": "闻诊", "type": "concept"},
+        {"id": "2.3", "label": "问诊", "type": "concept"},
+        {"id": "2.4", "label": "切诊", "type": "concept"}
+      ]
+    },
+    {
+      "id": "3",
+      "label": "辨证论治",
+      "type": "category",
+      "children": [
+        {"id": "3.1", "label": "八纲辨证", "type": "concept"},
+        {"id": "3.2", "label": "气血津液辨证", "type": "concept"},
+        {"id": "3.3", "label": "脏腑辨证", "type": "concept"},
+        {"id": "3.4", "label": "六经辨证", "type": "concept"},
+        {"id": "3.5", "label": "卫气营血辨证", "type": "concept"},
+        {"id": "3.6", "label": "三焦辨证", "type": "concept"}
+      ]
+    },
+    {
+      "id": "4",
+      "label": "常见病症",
+      "type": "category",
+      "children": [
+        {
+          "id": "4.1",
+          "label": "内科常见病",
+          "type": "subcategory",
+          "children": [
+            {"id": "4.1.1", "label": "感冒", "type": "disease"},
+            {"id": "4.1.2", "label": "咳嗽", "type": "disease"},
+            {"id": "4.1.3", "label": "头痛", "type": "disease"},
+            {"id": "4.1.4", "label": "胃痛", "type": "disease"},
+            {"id": "4.1.5", "label": "不寐", "type": "disease"},
+            {"id": "4.1.6", "label": "眩晕", "type": "disease"},
+            {"id": "4.1.7", "label": "泄泻", "type": "disease"},
+            {"id": "4.1.8", "label": "便秘", "type": "disease"},
+            {"id": "4.1.9", "label": "胸痹", "type": "disease"},
+            {"id": "4.1.10", "label": "腰痛", "type": "disease"}
+          ]
+        },
+        {
+          "id": "4.2",
+          "label": "妇科常见病",
+          "type": "subcategory",
+          "children": [
+            {"id": "4.2.1", "label": "月经不调", "type": "disease"},
+            {"id": "4.2.2", "label": "痛经", "type": "disease"},
+            {"id": "4.2.3", "label": "带下病", "type": "disease"}
+          ]
+        },
+        {
+          "id": "4.3",
+          "label": "儿科常见病",
+          "type": "subcategory",
+          "children": [
+            {"id": "4.3.1", "label": "小儿感冒", "type": "disease"},
+            {"id": "4.3.2", "label": "小儿咳嗽", "type": "disease"},
+            {"id": "4.3.3", "label": "小儿泄泻", "type": "disease"}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "label": "体测数据分析",
+      "type": "category",
+      "children": [
+        {"id": "5.1", "label": "BMI", "type": "concept"},
+        {"id": "5.2", "label": "腰围", "type": "concept"},
+        {"id": "5.3", "label": "腰臀比", "type": "concept"},
+        {"id": "5.4", "label": "体脂率", "type": "concept"},
+        {"id": "5.5", "label": "肥胖辨证", "type": "concept"},
+        {"id": "5.6", "label": "消瘦辨证", "type": "concept"}
+      ]
+    },
+    {
+      "id": "6",
+      "label": "食谱推荐",
+      "type": "category",
+      "children": [
+        {"id": "6.1", "label": "清淡食谱", "type": "food_category"},
+        {"id": "6.2", "label": "麻辣食谱", "type": "food_category"},
+        {"id": "6.3", "label": "素食食谱", "type": "food_category"},
+        {"id": "6.4", "label": "荤菜食谱", "type": "food_category"},
+        {"id": "6.5", "label": "汤品食谱", "type": "food_category"},
+        {"id": "6.6", "label": "主食食谱", "type": "food_category"}
+      ]
+    },
+    {
+      "id": "7",
+      "label": "中医常识与禁忌",
+      "type": "category",
+      "children": [
+        {"id": "7.1", "label": "服药禁忌", "type": "concept"},
+        {"id": "7.2", "label": "饮食禁忌", "type": "concept"},
+        {"id": "7.3", "label": "特殊人群禁忌", "type": "concept"},
+        {"id": "7.4", "label": "生活起居禁忌", "type": "concept"},
+        {"id": "7.5", "label": "情志禁忌", "type": "concept"}
+      ]
+    }
+  ],
+  "edges": [
+    {"source": "1.5", "target": "4", "label": "体质与病症关联"},
+    {"source": "1.6", "target": "4", "label": "病因与病症关联"},
+    {"source": "1.7", "target": "4", "label": "病机与病症关联"},
+    {"source": "2", "target": "3", "label": "四诊与辨证关联"},
+    {"source": "3", "target": "4", "label": "辨证与病症关联"},
+    {"source": "4", "target": "6", "label": "病症与食谱关联"},
+    {"source": "5", "target": "4", "label": "体测数据与病症关联"},
+    {"source": "5", "target": "1.5", "label": "体测数据与体质关联"},
+    {"source": "6", "target": "1.5", "label": "食谱与体质关联"}
+  ]
+}

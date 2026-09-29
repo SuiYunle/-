@@ -1,0 +1,1438 @@
+/* ============================================================
+   脉衡界 - 视觉增强样式表
+   适用于浅色蓝调主题的健康数据可视化应用
+   主色：天蓝 (#2563eb) | 背景：极浅蓝白 (#fafcff)
+   ============================================================ */
+
+/* ---------- 主题变量定义（与 style.css 保持一致的浅色主题） ---------- */
+:root {
+  /* 基础主题变量 - 浅色系 */
+  --primary: #2563eb;
+  --bg: #fafcff;
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --text: #334155;
+  --text-light: #64748b;
+  --border: rgba(148, 163, 184, 0.15);
+
+  /* 丰富色彩的强调色 */
+  --accent-purple: #8b5cf6;
+  --accent-blue: #3b82f6;
+  --accent-orange: #f97316;
+  --accent-pink: #ec4899;
+  --accent-green: #10b981;
+
+  /* 渐变色组合 - 蓝色系为主 */
+  --gradient-primary: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --gradient-orange: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
+  --gradient-pink: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+  --gradient-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  --gradient-rainbow: linear-gradient(
+    135deg,
+    #2563eb 0%,
+    #3b82f6 25%,
+    #8b5cf6 50%,
+    #ec4899 75%,
+    #f97316 100%
+  );
+
+  /* 阴影与光晕 - 柔和不施压 */
+  --glow-primary: 0 0 20px rgba(37, 99, 235, 0.15);
+  --glow-purple: 0 0 20px rgba(139, 92, 246, 0.15);
+  --glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+  --glow-soft: 0 4px 30px rgba(148, 163, 184, 0.12);
+  --shadow-card: 0 8px 32px rgba(148, 163, 184, 0.12);
+
+  /* 玻璃拟态参数 */
+  --glass-blur: 16px;
+  --glass-blur-strong: 24px;
+
+  /* 动画时长 */
+  --transition-fast: 0.2s ease;
+  --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   1. 增强卡片样式
+   更鲜艳的渐变边框、悬停光晕、玻璃拟态模糊
+   ============================================================ */
+
+/* 基础增强卡片 */
+.enhanced-card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* 卡片渐变边框光效（伪元素实现） */
+.enhanced-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(59, 130, 246, 0.5) 0%,
+    rgba(59, 130, 246, 0.3) 50%,
+    rgba(139, 92, 246, 0.5) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  transition: opacity var(--transition-base);
+  pointer-events: none;
+}
+
+/* 卡片悬停：上浮 + 光晕 + 边框加亮 */
+.enhanced-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), var(--glow-primary);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.enhanced-card:hover::before {
+  opacity: 1;
+}
+
+/* 卡片顶部装饰光带 */
+.enhanced-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(59, 130, 246, 0.6),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* 不同强调色的卡片变体 */
+.enhanced-card.accent-purple:hover {
+  box-shadow: var(--shadow-card), var(--glow-purple);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.enhanced-card.accent-blue:hover {
+  box-shadow: var(--shadow-card), var(--glow-blue);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* ============================================================
+   2. 动画渐变背景
+   页面背景的流动渐变网格
+   ============================================================ */
+
+/* 动态渐变网格背景 */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+/* 渐变光斑层 */
+.animated-bg::before,
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+/* 青绿色光斑 - 左上移动 */
+.animated-bg::before {
+  background: radial-gradient(circle, var(--primary), transparent 70%);
+  top: -20%;
+  left: -10%;
+  animation: floatBlob1 20s ease-in-out infinite;
+}
+
+/* 紫色光斑 - 右下移动 */
+.animated-bg::after {
+  background: radial-gradient(circle, var(--accent-purple), transparent 70%);
+  bottom: -20%;
+  right: -10%;
+  animation: floatBlob2 25s ease-in-out infinite;
+}
+
+/* 第三个光斑 - 蓝色 */
+.animated-bg .blob-blue {
+  position: absolute;
+  width: 50vw;
+  height: 50vw;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-blue), transparent 70%);
+  filter: blur(120px);
+  opacity: 0.1;
+  top: 30%;
+  left: 40%;
+  animation: floatBlob3 30s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* 光斑动画关键帧 */
+@keyframes floatBlob1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(15vw, 10vh) scale(1.1);
+  }
+  66% {
+    transform: translate(-5vw, 20vh) scale(0.9);
+  }
+}
+
+@keyframes floatBlob2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-10vw, -15vh) scale(1.15);
+  }
+  66% {
+    transform: translate(10vw, -5vh) scale(0.85);
+  }
+}
+
+@keyframes floatBlob3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-20vw, -10vh) scale(1.2);
+  }
+}
+
+/* ============================================================
+   3. 增强按钮样式
+   渐变按钮 + 悬停闪光效果 + 平滑过渡
+   ============================================================ */
+
+/* 主渐变按钮 */
+.btn-gradient {
+  position: relative;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 12px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+/* 悬停：上浮 + 光晕 + 闪光划过 */
+.btn-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+}
+
+/* 闪光效果（伪元素） */
+.btn-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s ease;
+}
+
+.btn-gradient:hover::before {
+  left: 100%;
+}
+
+/* 不同颜色的渐变按钮变体 */
+.btn-gradient.btn-purple {
+  background: var(--gradient-purple);
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+.btn-gradient.btn-purple:hover {
+  box-shadow: 0 6px 25px rgba(139, 92, 246, 0.5);
+}
+
+.btn-gradient.btn-blue {
+  background: var(--gradient-blue);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+.btn-gradient.btn-blue:hover {
+  box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.btn-gradient.btn-orange {
+  background: var(--gradient-orange);
+  box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+}
+.btn-gradient.btn-orange:hover {
+  box-shadow: 0 6px 25px rgba(249, 115, 22, 0.5);
+}
+
+/* 幽灵按钮（描边样式） */
+.btn-ghost-gradient {
+  position: relative;
+  padding: 11px 26px;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1.5px solid var(--primary);
+  transition: all var(--transition-base);
+  overflow: hidden;
+}
+
+.btn-ghost-gradient:hover {
+  color: #fff;
+  background: var(--gradient-primary);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   4. 帮助图标提示框样式
+   圆形问号图标 + 悬停显示使用说明
+   ============================================================ */
+
+/* 帮助图标容器 */
+.help-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.15);
+  border: 1px solid var(--border);
+  color: var(--text-light);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: help;
+  transition: all var(--transition-fast);
+  vertical-align: middle;
+  margin-left: 6px;
+}
+
+/* 悬停时图标高亮 */
+.help-icon:hover {
+  background: var(--gradient-primary);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
+  transform: scale(1.1);
+}
+
+/* 提示框（默认隐藏） */
+.help-icon .tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  min-width: 220px;
+  max-width: 280px;
+  padding: 12px 16px;
+  background: rgba(248, 250, 252, 0.95);
+  backdrop-filter: blur(var(--glass-blur-strong));
+  -webkit-backdrop-filter: blur(var(--glass-blur-strong));
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-align: left;
+  box-shadow: 0 8px 30px rgba(148, 163, 184, 0.5), 0 0 15px rgba(59, 130, 246, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--transition-base), transform var(--transition-base),
+    visibility var(--transition-base);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+/* 提示框小箭头 */
+.help-icon .tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(248, 250, 252, 0.95);
+}
+
+/* 悬停时显示提示框 */
+.help-icon:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* 提示框标题样式 */
+.help-icon .tooltip .tooltip-title {
+  display: block;
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================================================
+   5. 进度条增强
+   动画条纹 + 渐变填充
+   ============================================================ */
+
+/* 进度条容器 */
+.progress-enhanced {
+  width: 100%;
+  height: 10px;
+  background: rgba(59, 130, 246, 0.06);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 进度条填充 */
+.progress-enhanced .progress-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--gradient-primary);
+  position: relative;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* 条纹动画层 */
+.progress-enhanced .progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.15) 0,
+    rgba(255, 255, 255, 0.15) 8px,
+    transparent 8px,
+    transparent 16px
+  );
+  border-radius: 6px;
+  animation: progressStripes 1s linear infinite;
+}
+
+/* 条纹滚动动画 */
+@keyframes progressStripes {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 22.6px 0;
+  }
+}
+
+/* 进度条颜色变体 */
+.progress-enhanced .progress-fill.fill-purple {
+  background: var(--gradient-purple);
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+.progress-enhanced .progress-fill.fill-blue {
+  background: var(--gradient-blue);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+.progress-enhanced .progress-fill.fill-orange {
+  background: var(--gradient-orange);
+  box-shadow: 0 0 10px rgba(249, 115, 22, 0.5);
+}
+.progress-enhanced .progress-fill.fill-pink {
+  background: var(--gradient-pink);
+  box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+}
+.progress-enhanced .progress-fill.fill-green {
+  background: var(--gradient-green);
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* ============================================================
+   6. 图表/结果卡片增强
+   更多彩的维度条 + 渐变填充 + 光晕
+   ============================================================ */
+
+/* 维度条容器 */
+.dimension-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+/* 维度条标签 */
+.dimension-bar .dim-label {
+  flex-shrink: 0;
+  width: 80px;
+  font-size: 13px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* 维度条轨道 */
+.dimension-bar .dim-track {
+  flex: 1;
+  height: 22px;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 维度条填充 */
+.dimension-bar .dim-fill {
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  position: relative;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 光泽效果 */
+.dimension-bar .dim-fill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    transparent 50%
+  );
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* 维度条颜色变体 */
+.dimension-bar .dim-fill.fill-primary {
+  background: var(--gradient-primary);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+}
+.dimension-bar .dim-fill.fill-purple {
+  background: var(--gradient-purple);
+  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+}
+.dimension-bar .dim-fill.fill-blue {
+  background: var(--gradient-blue);
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.4);
+}
+.dimension-bar .dim-fill.fill-orange {
+  background: var(--gradient-orange);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+}
+.dimension-bar .dim-fill.fill-pink {
+  background: var(--gradient-pink);
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.4);
+}
+.dimension-bar .dim-fill.fill-green {
+  background: var(--gradient-green);
+  box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+}
+
+/* 结果卡片数值高亮 */
+.result-value-highlight {
+  font-size: 32px;
+  font-weight: 800;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+}
+
+/* ============================================================
+   7. 标签/徽章样式
+   彩色渐变标签用于功能高亮
+   ============================================================ */
+
+/* 基础渐变标签 */
+.tag-gradient {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--gradient-primary);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.tag-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+/* 标签颜色变体 */
+.tag-gradient.tag-purple {
+  background: var(--gradient-purple);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+.tag-gradient.tag-purple:hover {
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.5);
+}
+
+.tag-gradient.tag-blue {
+  background: var(--gradient-blue);
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+.tag-gradient.tag-blue:hover {
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.tag-gradient.tag-orange {
+  background: var(--gradient-orange);
+  box-shadow: 0 2px 8px rgba(249, 115, 22, 0.3);
+}
+.tag-gradient.tag-orange:hover {
+  box-shadow: 0 4px 12px rgba(249, 115, 22, 0.5);
+}
+
+.tag-gradient.tag-pink {
+  background: var(--gradient-pink);
+  box-shadow: 0 2px 8px rgba(236, 72, 153, 0.3);
+}
+.tag-gradient.tag-pink:hover {
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.5);
+}
+
+.tag-gradient.tag-green {
+  background: var(--gradient-green);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+.tag-gradient.tag-green:hover {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.5);
+}
+
+/* 幽灵标签（描边渐变） */
+.tag-ghost {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 11px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  transition: all var(--transition-fast);
+}
+
+.tag-ghost:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+}
+
+/* ============================================================
+   8. 页面切换过渡动画
+   淡入 + 上滑动画
+   ============================================================ */
+
+/* 页面进入动画 */
+.page-enter {
+  animation: pageEnter 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 页面离开动画 */
+.page-leave {
+  animation: pageLeave 0.3s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes pageLeave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+}
+
+/* 内容区块渐入动画（带延迟） */
+.fade-in-up {
+  animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 错开动画延迟工具类 */
+.fade-in-up.delay-1 {
+  animation-delay: 0.1s;
+}
+.fade-in-up.delay-2 {
+  animation-delay: 0.2s;
+}
+.fade-in-up.delay-3 {
+  animation-delay: 0.3s;
+}
+.fade-in-up.delay-4 {
+  animation-delay: 0.4s;
+}
+
+/* ============================================================
+   9. 装饰元素
+   浮动粒子动画 + 背景图案
+   ============================================================ */
+
+/* 粒子容器 */
+.particles-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* 单个浮动粒子 */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+  opacity: 0.3;
+  animation: floatParticle 15s linear infinite;
+}
+
+/* 不同颜色的粒子 */
+.particle.p-purple {
+  background: var(--accent-purple);
+}
+.particle.p-blue {
+  background: var(--accent-blue);
+}
+.particle.p-green {
+  background: var(--accent-green);
+}
+
+/* 粒子浮动动画 */
+@keyframes floatParticle {
+  0% {
+    transform: translateY(100vh) translateX(0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+    transform: translateY(90vh) translateX(10px) scale(1);
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(-20px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* 网格背景图案（叠加在主背景上） */
+.grid-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: linear-gradient(
+      rgba(59, 130, 246, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+}
+
+/* 顶部装饰光带 */
+.top-glow-line {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 400px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--primary),
+    var(--accent-blue),
+    var(--accent-purple),
+    transparent
+  );
+  opacity: 0.6;
+  filter: blur(1px);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* 脉冲呼吸光点 */
+.pulse-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+  animation: pulseDot 2s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+/* ============================================================
+   10. 滚动条样式
+   深色主题自定义滚动条
+   ============================================================ */
+
+/* Webkit 内核浏览器滚动条 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: rgba(248, 250, 252, 0.8);
+  border-radius: 5px;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(59, 130, 246, 0.5),
+    rgba(59, 130, 246, 0.5)
+  );
+  border-radius: 5px;
+  border: 2px solid rgba(248, 250, 252, 0.8);
+  transition: background 0.3s ease;
+}
+
+/* 滚动条滑块悬停 */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(59, 130, 246, 0.8),
+    rgba(59, 130, 246, 0.8)
+  );
+}
+
+/* 滚动条滑块激活 */
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    180deg,
+    var(--primary),
+    var(--accent-blue)
+  );
+}
+
+/* 滚动条角落 */
+::-webkit-scrollbar-corner {
+  background: rgba(248, 250, 252, 0.8);
+}
+
+/* Firefox 浏览器滚动条 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.5) rgba(248, 250, 252, 0.8);
+}
+
+/* ============================================================
+   附加：通用辅助类
+   ============================================================ */
+
+/* 文字渐变效果 */
+.text-gradient {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.text-gradient-rainbow {
+  background: var(--gradient-rainbow);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* 玻璃拟态分割线 */
+.glass-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border),
+    transparent
+  );
+  border: none;
+  margin: 20px 0;
+}
+
+/* 焦点环（无障碍） */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 尊重用户减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ============================================================
+   BMI性别选择器 - 增强视觉反馈
+   ============================================================ */
+
+.bmi-gender-selector {
+    display: flex;
+    gap: 14px;
+    margin-top: 10px;
+}
+
+.bmi-gender-option {
+    flex: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border: 2px solid rgba(148, 163, 184, 0.15);
+    border-radius: 14px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    background: rgba(59, 130, 246, 0.03);
+}
+
+/* 隐藏原始radio */
+.bmi-gender-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+}
+
+.bmi-gender-option .gender-icon-wrap {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.3s ease;
+    background: rgba(59, 130, 246, 0.07);
+}
+
+.bmi-gender-option .gender-text {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-light, #94a3b8);
+    transition: all 0.3s ease;
+}
+
+.bmi-gender-option .gender-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 14px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 男性选中状态 */
+.bmi-gender-option.male:has(input:checked),
+.bmi-gender-option.male.checked {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.25), inset 0 0 0 1px rgba(59, 130, 246, 0.2);
+    transform: translateY(-2px);
+}
+
+.bmi-gender-option.male:has(input:checked) .gender-icon-wrap,
+.bmi-gender-option.male.checked .gender-icon-wrap {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    box-shadow: 0 0 16px rgba(59, 130, 246, 0.5);
+    transform: scale(1.1);
+}
+
+.bmi-gender-option.male:has(input:checked) .gender-icon-wrap i,
+.bmi-gender-option.male.checked .gender-icon-wrap i {
+    color: white;
+}
+
+.bmi-gender-option.male:has(input:checked) .gender-text,
+.bmi-gender-option.male.checked .gender-text {
+    color: #60a5fa;
+    font-weight: 700;
+}
+
+.bmi-gender-option.male:has(input:checked) .gender-check,
+.bmi-gender-option.male.checked .gender-check {
+    opacity: 1;
+    transform: scale(1);
+    color: #3b82f6;
+}
+
+/* 女性选中状态 */
+.bmi-gender-option.female:has(input:checked),
+.bmi-gender-option.female.checked {
+    border-color: #ec4899;
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.05));
+    box-shadow: 0 4px 20px rgba(236, 72, 153, 0.25), inset 0 0 0 1px rgba(236, 72, 153, 0.2);
+    transform: translateY(-2px);
+}
+
+.bmi-gender-option.female:has(input:checked) .gender-icon-wrap,
+.bmi-gender-option.female.checked .gender-icon-wrap {
+    background: linear-gradient(135deg, #ec4899, #db2777);
+    box-shadow: 0 0 16px rgba(236, 72, 153, 0.5);
+    transform: scale(1.1);
+}
+
+.bmi-gender-option.female:has(input:checked) .gender-icon-wrap i,
+.bmi-gender-option.female.checked .gender-icon-wrap i {
+    color: white;
+}
+
+.bmi-gender-option.female:has(input:checked) .gender-text,
+.bmi-gender-option.female.checked .gender-text {
+    color: #f472b6;
+    font-weight: 700;
+}
+
+.bmi-gender-option.female:has(input:checked) .gender-check,
+.bmi-gender-option.female.checked .gender-check {
+    opacity: 1;
+    transform: scale(1);
+    color: #ec4899;
+}
+
+/* 未选中状态的图标颜色 */
+.bmi-gender-option.male .gender-icon-wrap i {
+    color: #60a5fa;
+}
+
+.bmi-gender-option.female .gender-icon-wrap i {
+    color: #f472b6;
+}
+
+/* hover 效果 */
+.bmi-gender-option:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(59, 130, 246, 0.05);
+}
+
+.bmi-gender-option.male:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.bmi-gender-option.female:hover {
+    border-color: rgba(236, 72, 153, 0.3);
+}
+
+
+/* ============================================================
+   心理测评问卷样式
+   ============================================================ */
+
+.quiz-progress-bar {
+    height: 6px;
+    background: rgba(59, 130, 246, 0.07);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.quiz-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+    border-radius: 3px;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+}
+
+.quiz-progress-text {
+    font-size: 13px;
+    color: var(--text-light, #94a3b8);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.quiz-question {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text, #334155);
+    margin-bottom: 16px;
+    line-height: 1.6;
+}
+
+.quiz-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    padding: 14px 16px;
+    border: 2px solid rgba(59, 130, 246, 0.07);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(59, 130, 246, 0.03);
+    color: var(--text, #334155);
+    font-size: 14px;
+}
+
+.quiz-option:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(59, 130, 246, 0.06);
+    transform: translateX(4px);
+}
+
+.quiz-option.selected {
+    border-color: var(--primary, #2563eb);
+    background: rgba(59, 130, 246, 0.12);
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+}
+
+.quiz-option .option-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(59, 130, 246, 0.07);
+    color: var(--text-light, #94a3b8);
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+}
+
+.quiz-option.selected .option-letter {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: white;
+}
+
+.quiz-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+
+/* ============================================================
+   资讯卡片增强
+   ============================================================ */
+
+.feed-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+.feed-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(148, 163, 184, 0.3);
+}
+
+.feed-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feed-card:hover::before {
+    opacity: 1;
+}
+
+
+/* ============================================================
+   按钮增强动画
+   ============================================================ */
+
+.btn-primary {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-icon {
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    transform: scale(1.15);
+    color: var(--primary-light, #3b82f6);
+}
+
+
+/* ============================================================
+   卡片入场动画
+   ============================================================ */
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content-page.active .card {
+    animation: cardFadeIn 0.5s ease forwards;
+}
+
+.content-page.active .card:nth-child(1) { animation-delay: 0.05s; }
+.content-page.active .card:nth-child(2) { animation-delay: 0.1s; }
+.content-page.active .card:nth-child(3) { animation-delay: 0.15s; }
+.content-page.active .card:nth-child(4) { animation-delay: 0.2s; }
+.content-page.active .card:nth-child(5) { animation-delay: 0.25s; }
+
+
+/* ============================================================
+   输入框增强
+   ============================================================ */
+
+input[type="text"], input[type="number"], textarea, select {
+    transition: all 0.25s ease;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+
+/* ============================================================
+   移动端汉堡菜单按钮
+   ============================================================ */
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text, #334155);
+    font-size: 22px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(59, 130, 246, 0.07);
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .bmi-gender-selector {
+        gap: 10px;
+    }
+    
+    .bmi-gender-option {
+        padding: 10px 12px;
+        gap: 6px;
+    }
+    
+    .bmi-gender-option .gender-icon-wrap {
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+    }
+    
+    .bmi-gender-option .gender-text {
+        font-size: 14px;
+    }
+}
+
+/* ============================================================
+    暗色主题支持
+    ============================================================ */
+:root[data-theme="dark"],
+body.dark-theme {
+    --bg: #0f172a;
+    --bg-surface: #1e293b;
+    --bg-elevated: #33415d;
+    --bg-card: rgba(30, 41, 59, 0.85);
+    --bg-glass: rgba(59, 130, 246, 0.05);
+    --text: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-light: #64748b;
+    --text-muted: #475569;
+    --border: rgba(148, 163, 184, 0.3);
+    --border-light: rgba(148, 163, 184, 0.2);
+    --primary: #3b82f6;
+    --primary-light: #60a5fa;
+    --accent: #fb923c;
+}
+
+body.dark-theme {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+body.dark-theme .message-bubble,
+body.dark-theme .card,
+body.dark-theme .message-box {
+    background: var(--bg-card);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+body.dark-theme .sidebar {
+    background: rgba(15, 23, 42, 0.95);
+    border-right: 1px solid var(--border);
+}
+
+body.dark-theme .bottom-nav {
+    background: rgba(15, 23, 42, 0.9);
+    border-top: 1px solid var(--border);
+}

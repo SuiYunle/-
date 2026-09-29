@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#0d9488">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>脉衡界 - 校园健康智能体</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/visual_enhancements.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <!-- ==================== 登录界面 ==================== -->
+        <div id="login-page" class="page active">
+            <div class="login-container">
+                <div class="login-logo">
+                    <div class="login-logo-img">
+                        <img src="img/app-logo-new.jpg" alt="脉衡界" class="login-logo-image">
+                    </div>
+                    <h1>脉衡界</h1>
+                    <p>校园健康智能体系统</p>
+                </div>
+                <div class="login-form">
+                    <input type="text" id="login-student-id" placeholder="学号" value="2024001">
+                    <input type="text" id="login-username" placeholder="姓名" value="测试用户">
+                    <button onclick="app.login()" class="btn-primary">
+                        <i class="fas fa-sign-in-alt"></i> 进入系统
+                    </button>
+                    <p class="login-hint">演示模式：输入任意学号即可登录</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== 主界面 ==================== -->
+        <div id="main-page" class="page">
+            <!-- 侧边栏遮罩（移动端） -->
+            <div class="sidebar-backdrop" onclick="app.closeSidebar()"></div>
+
+            <!-- 侧边栏（桌面端） -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="avatar-small">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <span>脉衡界</span>
+                </div>
+                <nav class="sidebar-nav">
+                    <div class="nav-section-label">核心功能</div>
+                    <a href="#" class="nav-item active" data-page="chat" onclick="app.switchPage('chat');return false;">
+                        <i class="fas fa-comments"></i>
+                        <span>AI小艺</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="mental" onclick="app.switchPage('mental');return false;">
+                        <i class="fas fa-brain"></i>
+                        <span>心理疏导</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="tcm" onclick="app.switchPage('tcm');return false;">
+                        <i class="fas fa-yin-yang"></i>
+                        <span>体质辨识</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="diet" onclick="app.switchPage('diet');return false;">
+                        <i class="fas fa-utensils"></i>
+                        <span>智能膳食</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="diagnosis" onclick="app.switchPage('diagnosis');return false;">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>AI问诊</span>
+                    </a>
+
+                    <div class="nav-section-label">更多</div>
+                    <a href="#" class="nav-item" data-page="community" onclick="app.switchPage('community');return false;">
+                        <i class="fas fa-globe"></i>
+                        <span>健康微社区</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="rewards" onclick="app.switchPage('rewards');return false;">
+                        <i class="fas fa-trophy"></i>
+                        <span>积分中心</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="privacy" onclick="app.switchPage('privacy');return false;">
+                        <i class="fas fa-shield-halved"></i>
+                        <span>隐私设置</span>
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <div class="user-info">
+                        <div class="user-avatar" id="user-avatar-text">用</div>
+                        <div class="user-text">
+                            <span id="user-name">用户</span>
+                            <small id="user-points">0 积分</small>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- 主内容区 -->
+            <main class="main-content">
+                <!-- 移动端顶部栏 -->
+                <div class="mobile-header">
+                    <div class="header-title">
+                        <i class="fas fa-heart-pulse"></i>
+                        <span>脉衡界</span>
+                    </div>
+                    <div class="header-points" id="mobile-user-points">
+                        <i class="fas fa-coins"></i>
+                        <span>0</span>
+                    </div>
+                </div>
+
+                <!-- ========== 数字人对话页 ========== -->
+                <div id="page-chat" class="content-page active">
+                    <div class="chat-header" data-help-page="chat">
+                        <div class="digital-human">
+                            <div class="digital-avatar">
+                                <div class="avatar-glow"></div>
+                                <img src="img/mascot_idle.png" alt="AI小艺" class="xiaoyi-avatar-img">
+                            </div>
+                            <div class="digital-info">
+                                <h2>AI小艺</h2>
+                                <span class="status"><i class="fas fa-circle"></i> 在线</span>
+                            </div>
+                        </div>
+<div class="chat-actions">
+                        <button onclick="app.openCaseLibrary()" class="btn-icon" title="医案库" style="background:linear-gradient(135deg,var(--primary),var(--primary-light));color:white;border:none;">
+                            <i class="fas fa-book-medical"></i>
+                        </button>
+                        <button onclick="app.clearChat()" class="btn-icon" title="清空对话">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    </div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <div class="message-bubble">
+                                <p>你好！我是AI小艺，你的专属健康助手。</p>
+                                <p>我可以帮你：</p>
+                                <ul>
+                                    <li>解答健康、中医、心理问题</li>
+                                    <li>分析舌象、餐食照片</li>
+                                    <li>记录健康档案</li>
+                                    <li>提供心理疏导</li>
+                                </ul>
+                                <p>有什么我可以帮你的吗？</p>
+                            </div>
+                        </div>
+                        <div class="quick-replies">
+                            <button class="quick-reply-btn" onclick="app.quickReply('我最近压力很大，有点焦虑')">
+                                <i class="fas fa-brain"></i> 心理压力
+                            </button>
+                            <button class="quick-reply-btn" onclick="app.quickReply('我是什么体质？如何调理？')">
+                                <i class="fas fa-leaf"></i> 中医体质
+                            </button>
+                            <button class="quick-reply-btn" onclick="app.quickReply('最近感冒了怎么办')">
+                                <i class="fas fa-stethoscope"></i> 健康问诊
+                            </button>
+                            <button class="quick-reply-btn" onclick="app.quickReply('推荐一份适合学生的健康食谱')">
+                                <i class="fas fa-utensils"></i> 食疗推荐
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <div class="input-tools">
+                            <button onclick="app.triggerUpload('tongue')" class="btn-tool" title="上传舌象">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                            <button onclick="app.triggerUpload('meal')" class="btn-tool" title="上传餐食">
+                                <i class="fas fa-utensils"></i>
+                            </button>
+                            <input type="file" id="upload-input" accept="image/*" style="display:none" onchange="app.handleUpload(event)">
+                            <!-- 语音输入按钮 -->
+                            <button onclick="app.onMicClick()" class="btn-tool" title="语音输入" id="mic-button" style="display:none;">
+                                <i class="fas fa-microphone"></i>
+                            </button>
+                            <!-- 表情按钮 -->
+                            <button onclick="app.toggleEmojiPicker()" class="btn-tool" title="表情" style="display:none;background:rgba(59,130,246,0.1);border-radius:50%;width:36px;height:36px;padding:0;">
+                                <i class="fas fa-smile" style="color:var(--primary-lighter);font-size:18px;"></i>
+                            </button>
+                        </div>
+<div class="input-box">
+                                <textarea id="chat-input" placeholder="输入消息...（支持文字、图片、表情）" rows="1" onkeydown="app.handleKeydown(event)"></textarea>
+                                <div class="emoji-picker" id="emoji-picker" style="display:none;position:absolute;bottom:50px;right:20px;background:white;padding:8px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);z-index:100;">
+                                    <div style="padding:4px 8px;background:#f3f4f6;border-radius:6px;margin-bottom:8px;">
+                                        <span onclick="app.insertEmoji('😀')" style="cursor:pointer;margin-right:4px;">😀</span>
+                                        <span onclick="app.insertEmoji('😂')" style="cursor:pointer;margin-right:4px;">😂</span>
+                                        <span onclick="app.insertEmoji('😊')" style="cursor:pointer;margin-right:4px;">😊</span>
+                                        <span onclick="app.insertEmoji('👍')" style="cursor:pointer;margin-right:4px;">👍</span>
+                                        <span onclick="app.insertEmoji('❤️')" style="cursor:pointer;margin-right:4px;">❤️</span>
+                                    </div>
+                                    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:4px;">
+                                        <span onclick="app.insertEmoji('😢')" style="cursor:pointer;">😢</span>
+                                        <span onclick="app.insertEmoji('😴')" style="cursor:pointer;">😴</span>
+                                        <span onclick="app.insertEmoji('💪')" style="cursor:pointer;">💪</span>
+                                        <span onclick="app.insertEmoji('🥗')" style="cursor:pointer;">🥗</span>
+                                        <span onclick="app.insertEmoji('💊')" style="cursor:pointer;">💊</span>
+                                        <span onclick="app.insertEmoji('🔥')" style="cursor:pointer;">🔥</span>
+                                        <span onclick="app.insertEmoji('💧')" style="cursor:pointer;">💧</span>
+                                        <span onclick="app.insertEmoji('🌟')" style="cursor:pointer;">🌟</span>
+                                        <span onclick="app.insertEmoji('🌿')" style="cursor:pointer;">🌿</span>
+                                        <span onclick="app.insertEmoji('📱')" style="cursor:pointer;">📱</span>
+                                    </div>
+                                </div>
+                                <button onclick="app.sendMessage()" class="btn-send">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                    </div>
+                </div>
+
+                <!-- ========== 心理疏导页 ========== -->
+                <div id="page-mental" class="content-page">
+                    <div class="page-header" data-help-page="mental">
+                        <h2><i class="fas fa-brain"></i> 心理疏导</h2>
+                        <p>专业心理测评 · AI倾听陪伴</p>
+                    </div>
+
+                    <!-- 心理测评主区块 -->
+                    <div class="card" style="margin-bottom:24px;">
+                        <h3 style="margin-bottom:8px;"><i class="fas fa-clipboard-check" style="color:var(--primary-lighter);"></i> 心理状态测评</h3>
+                        <p style="color:var(--text-light);font-size:14px;margin-bottom:12px;">从50题题库随机抽取20题，评估焦虑、抑郁、压力、睡眠、社交五个维度的心理健康状态</p>
+                        <div id="mental-quiz-intro">
+                            <button onclick="app.startMentalQuiz()" class="btn-primary">
+                                <i class="fas fa-play"></i> 开始测评
+                            </button>
+                        </div>
+                        <div id="mental-quiz-container" style="display:none;">
+                            <div class="quiz-progress-bar">
+                                <div class="quiz-progress-fill" id="mental-quiz-progress-fill" style="width:0%;"></div>
+                            </div>
+                            <div class="quiz-progress-text" id="mental-quiz-progress-text">第 1 / 40 题</div>
+                            <div class="quiz-question" id="mental-quiz-question"></div>
+                            <div class="quiz-options" id="mental-quiz-options"></div>
+                            <div class="quiz-nav">
+                                <button class="btn-secondary" id="mental-quiz-prev-btn" onclick="app.prevMentalQuizQuestion()">
+                                    <i class="fas fa-arrow-left"></i> 上一题
+                                </button>
+                                <button class="btn-primary" id="mental-quiz-next-btn" onclick="app.nextMentalQuizQuestion()">
+                                    下一题 <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="mental-quiz-result" style="display:none;"></div>
+                    </div>
+
+                    <!-- AI倾听陪伴 -->
+                    <h3 style="font-family:var(--font-serif);font-size:18px;margin:8px 0 16px;color:var(--text);display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-comments" style="color:var(--primary-lighter);"></i> AI倾听陪伴
+                    </h3>
+                    <div class="mental-container">
+                        <div class="mental-chat-wrapper">
+                            <div class="chat-messages" id="mental-messages"></div>
+                            <div class="chat-input-area">
+                                <div class="input-box">
+                                    <textarea id="mental-input" placeholder="说说你的心情..." rows="1" onkeydown="app.handleMentalKeydown(event)"></textarea>
+                                    <button onclick="app.sendMentalMessage()" class="btn-send">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mental-sidebar">
+                            <div class="card">
+                                <h3><i class="fas fa-chart-line"></i> 心理状态趋势</h3>
+                                <div id="mental-chart" class="chart-placeholder">
+                                    <canvas id="mental-canvas"></canvas>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <h3><i class="fas fa-info-circle"></i> 关于心理预警</h3>
+                                <p style="color:var(--text-light);font-size:14px;">当你开启心理预警功能后，如果系统检测到心理状态评分持续较低，会匿名通知辅导员关注。</p>
+                                <p style="color:var(--text-light);font-size:14px;margin-top:8px;">你可以随时在隐私设置中关闭此功能。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 中医体质页 ========== -->
+                <div id="page-tcm" class="content-page">
+                    <div class="page-header" data-help-page="tcm">
+                        <h2><i class="fas fa-yin-yang"></i> 体质辨识</h2>
+                        <p>九种体质智能辨识 · 专属调理方案</p>
+                    </div>
+                    <div class="page-banner">
+                        <img src="img/herbal-wreath.jpg" alt="中医养生" class="page-banner-img">
+                    </div>
+
+                    <!-- 体质辨识主区块 -->
+                    <!-- 测评引导 -->
+                    <div id="constitution-intro" class="card" style="text-align:center;padding:40px;">
+                        <div style="width:80px;height:80px;background:linear-gradient(135deg,var(--primary),var(--primary-light));border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;color:white;box-shadow:0 0 32px var(--primary-glow);">
+                            <i class="fas fa-yin-yang"></i>
+                        </div>
+                        <h3 style="font-family:var(--font-serif);font-size:24px;margin-bottom:12px;color:var(--text);">九种体质智能辨识</h3>
+                        <p style="color:var(--text-light);font-size:15px;max-width:500px;margin:0 auto 24px;line-height:1.8;">
+                            从35道科学题目中每次随机抽取10题，精准判断你的中医体质类型，<br>获得专属饮食、运动、起居、情志调理方案
+                        </p>
+                        <button onclick="app.startConstitutionQuiz()" class="btn-primary" style="max-width:280px;margin:0 auto;">
+                            <i class="fas fa-play"></i> 开始体质测评
+                        </button>
+                    </div>
+
+                    <!-- 测评问卷 -->
+                    <div id="constitution-quiz" style="display:none;">
+                        <div class="card">
+                            <div class="quiz-progress">
+                                <div class="quiz-progress-bar">
+                                    <div class="quiz-progress-fill" id="quiz-progress-fill" style="width:10%;"></div>
+                                </div>
+                                <span class="quiz-progress-text" id="quiz-progress-text">1 / 10</span>
+                            </div>
+                            <div class="quiz-question" id="quiz-question"></div>
+                            <div class="quiz-options" id="quiz-options"></div>
+                            <div class="quiz-nav">
+                                <button class="btn-secondary" id="quiz-prev-btn" onclick="app.prevQuizQuestion()" style="display:none;">
+                                    <i class="fas fa-arrow-left"></i> 上一题
+                                </button>
+                                <button class="btn-primary" id="quiz-next-btn" onclick="app.nextQuizQuestion()" style="max-width:160px;margin-left:auto;">
+                                    下一题 <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 测评结果 -->
+                    <div id="constitution-result" style="display:none;"></div>
+                </div>
+
+                <!-- ========== 智能膳食页 ========== -->
+                <div id="page-diet" class="content-page">
+                    <div class="page-header" data-help-page="diet">
+                        <h2><i class="fas fa-utensils"></i> 智能膳食</h2>
+                        <p>膳食推荐 · 饮食记录 · 热量分析 · 夜宵习惯</p>
+                    </div>
+                    <div class="page-banner">
+                        <img src="img/herbal-wreath.jpg" alt="健康膳食" class="page-banner-img">
+                    </div>
+
+                    <!-- BMI数据同步 -->
+                    <div class="card" id="diet-bmi-sync-card" style="margin-bottom:16px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+                            <div>
+                                <h4 style="margin:0 0 4px;font-size:15px;"><i class="fas fa-sync-alt" style="color:var(--primary);"></i> BMI数据同步</h4>
+                                <p style="margin:0;color:var(--text-light);font-size:13px;">自动从AI问诊同步身高、体重、BMI数据到膳食推荐</p>
+                            </div>
+                            <button onclick="app.syncBmiToDiet()" class="btn-secondary" style="white-space:nowrap;">
+                                <i class="fas fa-sync"></i> 同步数据
+                            </button>
+                        </div>
+                        <div id="diet-bmi-info" style="margin-top:12px;display:none;">
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;font-size:13px;">
+                                <div><span style="color:var(--text-muted);">身高:</span> <span id="diet-bmi-height">-</span> cm</div>
+                                <div><span style="color:var(--text-muted);">体重:</span> <span id="diet-bmi-weight">-</span> kg</div>
+                                <div><span style="color:var(--text-muted);">BMI:</span> <span id="diet-bmi-value">-</span></div>
+                                <div><span style="color:var(--text-muted);">分类:</span> <span id="diet-bmi-category">-</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 膳食推荐设置 -->
+                    <div class="card">
+                        <h3 style="font-size:16px;margin-bottom:16px;"><i class="fas fa-cog" style="color:var(--primary);"></i> 推荐设置</h3>
+
+                        <div class="form-group">
+                            <label>膳食目标</label>
+                            <select id="diet-goal">
+                                <option value="maintain">均衡饮食（维持体重）</option>
+                                <option value="lose_weight">减脂瘦身</option>
+                                <option value="gain_muscle">增肌增重</option>
+                                <option value="heat_relief">清热消暑</option>
+                                <option value="warming">温阳驱寒</option>
+                                <option value="spleen_stomach">健脾养胃</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>体质类型（自动从测评结果获取）</label>
+                            <select id="diet-constitution">
+                                <option value="">未测评-自动获取</option>
+                                <option value="平和质">平和质</option>
+                                <option value="气虚质">气虚质</option>
+                                <option value="阳虚质">阳虚质</option>
+                                <option value="阴虚质">阴虚质</option>
+                                <option value="痰湿质">痰湿质</option>
+                                <option value="湿热质">湿热质</option>
+                                <option value="血瘀质">血瘀质</option>
+                                <option value="气郁质">气郁质</option>
+                                <option value="特禀质">特禀质</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>偏好标签（可多选）</label>
+                            <div id="diet-tags" style="display:flex;flex-wrap:wrap;gap:8px;">
+                                <label class="diet-tag"><input type="checkbox" value="清淡"> 清淡</label>
+                                <label class="diet-tag"><input type="checkbox" value="减脂"> 减脂</label>
+                                <label class="diet-tag"><input type="checkbox" value="高蛋白"> 高蛋白</label>
+                                <label class="diet-tag"><input type="checkbox" value="补气"> 补气</label>
+                                <label class="diet-tag"><input type="checkbox" value="补血"> 补血</label>
+                                <label class="diet-tag"><input type="checkbox" value="祛湿"> 祛湿</label>
+                                <label class="diet-tag"><input type="checkbox" value="安神"> 安神</label>
+                                <label class="diet-tag"><input type="checkbox" value="消暑"> 消暑</label>
+                                <label class="diet-tag"><input type="checkbox" value="通便"> 通便</label>
+                                <label class="diet-tag"><input type="checkbox" value="养胃"> 养胃</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>额外备注（选填）</label>
+                            <input type="text" id="diet-notes" placeholder="如：不吃辣、素食、过敏食物等">
+                        </div>
+
+                        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                            <button onclick="app.getDietRecommendation('algorithm')" class="btn-primary" style="flex:1;min-width:140px;">
+                                <i class="fas fa-magic"></i> 算法推荐
+                            </button>
+                            <button onclick="app.getDietRecommendation('ai')" class="btn-secondary" style="flex:1;min-width:140px;">
+                                <i class="fas fa-robot"></i> AI精细推荐
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 推荐结果展示 -->
+                    <div id="diet-result" style="display:none;margin-top:16px;">
+                        <div class="card">
+                            <h3 style="font-size:16px;margin-bottom:16px;"><i class="fas fa-fire" style="color:#ef4444;"></i> 热量目标</h3>
+                            <div id="diet-calories-summary" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:12px;text-align:center;"></div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px;">
+                            <!-- 早餐 -->
+                            <div class="card diet-meal-card">
+                                <h4><i class="fas fa-sun" style="color:#f59e0b;"></i> 早餐 <small id="diet-breakfast-cal" style="color:var(--text-muted);"></small></h4>
+                                <div id="diet-breakfast-items"></div>
+                            </div>
+                            <!-- 午餐 -->
+                            <div class="card diet-meal-card">
+                                <h4><i class="fas fa-cloud-sun" style="color:#3b82f6;"></i> 午餐 <small id="diet-lunch-cal" style="color:var(--text-muted);"></small></h4>
+                                <div id="diet-lunch-items"></div>
+                            </div>
+                            <!-- 晚餐 -->
+                            <div class="card diet-meal-card">
+                                <h4><i class="fas fa-moon" style="color:#8b5cf6;"></i> 晚餐 <small id="diet-dinner-cal" style="color:var(--text-muted);"></small></h4>
+                                <div id="diet-dinner-items"></div>
+                            </div>
+                            <!-- 加餐 -->
+                            <div class="card diet-meal-card">
+                                <h4><i class="fas fa-cookie-bite" style="color:#10b981;"></i> 加餐 <small id="diet-snack-cal" style="color:var(--text-muted);"></small></h4>
+                                <div id="diet-snack-items"></div>
+                            </div>
+                        </div>
+
+                        <!-- AI精细推荐额外内容 -->
+                        <div id="diet-ai-extra" style="display:none;margin-top:16px;">
+                            <div class="card">
+                                <h3 style="font-size:16px;margin-bottom:12px;"><i class="fas fa-robot" style="color:var(--primary);"></i> AI精细化建议</h3>
+                                <div id="diet-ai-content"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 推荐历史 -->
+                    <div style="margin-top:24px;">
+                        <h3 style="font-family:var(--font-serif);font-size:18px;margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:10px;">
+                            <i class="fas fa-history" style="color:var(--primary-lighter);"></i> 推荐历史
+                        </h3>
+                        <div id="diet-history" class="card" style="text-align:center;color:var(--text-muted);padding:24px;font-size:14px;">
+                            暂无推荐记录
+                        </div>
+                    </div>
+
+                    <!-- ==================== 饮食记录 ==================== -->
+                    <h3 style="font-family:var(--font-serif);font-size:18px;margin:32px 0 16px;color:var(--text);display:flex;align-items:center;gap:10px;">
+                        <i class="fas fa-clipboard-list" style="color:var(--primary-lighter);"></i> 饮食记录
+                    </h3>
+
+                    <!-- 热量可视化 -->
+                    <div class="card" style="margin-bottom:16px;">
+                        <h4 style="font-size:15px;margin-bottom:12px;"><i class="fas fa-chart-line" style="color:var(--primary);"></i> 热量趋势</h4>
+                        <div style="display:flex;gap:8px;margin-bottom:12px;">
+                            <button onclick="app.loadCaloriesChart(7)" class="btn-secondary btn-sm" id="chart-days-7">7天</button>
+                            <button onclick="app.loadCaloriesChart(14)" class="btn-secondary btn-sm" id="chart-days-14">14天</button>
+                            <button onclick="app.loadCaloriesChart(30)" class="btn-secondary btn-sm" id="chart-days-30">30天</button>
+                        </div>
+                        <div id="calories-chart" style="height:200px;position:relative;">
+                            <canvas id="calories-canvas"></canvas>
+                        </div>
+                        <div id="calories-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px;font-size:12px;text-align:center;"></div>
+                    </div>
+
+                    <!-- 添加饮食记录 -->
+                    <div class="card" style="margin-bottom:16px;">
+                        <h4 style="font-size:15px;margin-bottom:12px;"><i class="fas fa-plus-circle" style="color:var(--primary);"></i> 添加记录</h4>
+                        
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                            <div class="form-group">
+                                <label>日期</label>
+                                <input type="date" id="diet-log-date" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>时间</label>
+                                <input type="time" id="diet-log-time" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>餐次</label>
+                            <select id="diet-log-meal" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                                <option value="breakfast">早餐</option>
+                                <option value="lunch">午餐</option>
+                                <option value="dinner">晚餐</option>
+                                <option value="snack">加餐/零食</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>食物名称</label>
+                            <input type="text" id="diet-log-food" placeholder="如：米饭、苹果、牛奶" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+                            <div class="form-group">
+                                <label>份量(g)</label>
+                                <input type="number" id="diet-log-serving" min="0" value="100" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>份数</label>
+                                <input type="number" id="diet-log-count" min="0.5" step="0.5" value="1" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+                            <div class="form-group">
+                                <label>热量(kcal)</label>
+                                <input type="number" id="diet-log-calories" min="0" value="0" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>蛋白质(g)</label>
+                                <input type="number" id="diet-log-protein" min="0" value="0" step="0.1" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>脂肪(g)</label>
+                                <input type="number" id="diet-log-fat" min="0" value="0" step="0.1" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                            <div class="form-group">
+                                <label>碳水(g)</label>
+                                <input type="number" id="diet-log-carbs" min="0" value="0" step="0.1" style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>备注</label>
+                            <textarea id="diet-log-notes" rows="2" placeholder="可选备注..." style="width:100%;padding:8px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;resize:none;font-family:inherit;"></textarea>
+                        </div>
+
+                        <button onclick="app.addDietLog()" class="btn-primary" style="width:100%;">
+                            <i class="fas fa-plus"></i> 添加记录
+                        </button>
+                    </div>
+
+                    <!-- 今日记录列表 -->
+                    <div class="card" style="margin-bottom:16px;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <h4 style="font-size:15px;margin:0;"><i class="fas fa-list" style="color:var(--primary);"></i> 今日记录</h4>
+                            <button onclick="app.loadDietLogs()" class="btn-secondary btn-sm">
+                                <i class="fas fa-refresh"></i> 刷新
+                            </button>
+                        </div>
+                        <div id="diet-logs-list" style="min-height:100px;">
+                            <div style="text-align:center;color:var(--text-muted);padding:20px;font-size:13px;">暂无记录</div>
+                        </div>
+                    </div>
+
+                    <!-- 夜宵习惯分析 -->
+                    <div class="card" style="margin-bottom:16px;">
+                        <h4 style="font-size:15px;margin-bottom:12px;"><i class="fas fa-moon" style="color:var(--primary);"></i> 夜宵习惯分析</h4>
+                        <div id="night-analysis" style="min-height:100px;">
+                            <div style="text-align:center;color:var(--text-muted);padding:20px;font-size:13px;">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== AI问诊页 ========== -->
+                <div id="page-diagnosis" class="content-page">
+                    <div class="page-header" data-help-page="diagnosis">
+                        <h2><i class="fas fa-stethoscope"></i> AI问诊</h2>
+                        <p>BMI分析 · 症状自查 · 健康档案参考</p>
+                    </div>
+                    <div class="diagnosis-grid">
+                        <div class="card">
+                            <h3><i class="fas fa-weight"></i> BMI分析</h3>
+                            <div class="form-group">
+                                <label>性别</label>
+                                <div class="bmi-gender-selector">
+                                    <label class="bmi-gender-option active" data-gender="male">
+                                        <input type="radio" name="bmi-gender" value="male" checked>
+                                        <i class="fas fa-mars gender-icon"></i>
+                                        <span class="gender-text">男</span>
+                                        <span class="gender-check"><i class="fas fa-check-circle"></i></span>
+                                    </label>
+                                    <label class="bmi-gender-option" data-gender="female">
+                                        <input type="radio" name="bmi-gender" value="female">
+                                        <i class="fas fa-venus gender-icon"></i>
+                                        <span class="gender-text">女</span>
+                                        <span class="gender-check"><i class="fas fa-check-circle"></i></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>身高 (cm)</label>
+                                <input type="number" id="bmi-height" placeholder="170">
+                            </div>
+                            <div class="form-group">
+                                <label>体重 (kg)</label>
+                                <input type="number" id="bmi-weight" placeholder="65">
+                            </div>
+                            <button onclick="app.analyzeBMI()" class="btn-primary">
+                                <i class="fas fa-calculator"></i> 计算分析
+                            </button>
+                            <div id="bmi-result" class="analysis-result"></div>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-file-medical-alt"></i> 健康档案参考</h3>
+                            <p style="color:var(--text-light);font-size:14px;margin-bottom:12px;">汇总你在各板块的最近测评结果，作为AI问诊的参考依据</p>
+                            <div id="health-summary">
+                                <div style="text-align:center;color:var(--text-muted);padding:20px;font-size:13px;">暂无档案数据</div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-notes-medical"></i> 症状自查</h3>
+                            <div class="form-group">
+                                <label>描述你的症状</label>
+                                <textarea id="symptom-input" rows="4" placeholder="例如：最近一周咳嗽，伴有咽痛..."></textarea>
+                            </div>
+                            <button onclick="app.checkSymptoms()" class="btn-primary">
+                                <i class="fas fa-search"></i> 开始自查
+                            </button>
+                            <div id="symptom-result" class="analysis-result"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 健康资讯页 ========== -->
+                <div id="page-community" class="content-page">
+                    <div class="page-header" data-help-page="community">
+                        <h2><i class="fas fa-newspaper"></i> 健康资讯</h2>
+                        <p>权威健康知识推送，科学养生每一天</p>
+                    </div>
+                    <div class="feed-layout">
+                        <div class="feed-categories" id="feed-categories"></div>
+                        <div class="feed-list" id="feed-list"></div>
+                    </div>
+                </div>
+
+                <!-- ========== 积分中心页 ========== -->
+                <div id="page-rewards" class="content-page">
+                    <div class="page-header" data-help-page="rewards">
+                        <h2><i class="fas fa-trophy"></i> 积分中心</h2>
+                        <p>每日互动累积积分，兑换专属健康权益</p>
+                    </div>
+                    <div class="rewards-hero">
+                        <img src="img/badge-gold.jpg" alt="健康成就" class="rewards-badge-img">
+                        <div class="rewards-hero-text">
+                            <h3>坚持健康管理，赢取专属徽章</h3>
+                            <p>完成每日打卡、健康测评，解锁更多成就</p>
+                        </div>
+                    </div>
+                    <div class="rewards-container">
+                        <div class="card stats-card">
+                            <div class="stat-item">
+                                <div class="stat-value" id="reward-total">0</div>
+                                <div class="stat-label">总积分</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="reward-today">0</div>
+                                <div class="stat-label">今日积分</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="reward-week">0</div>
+                                <div class="stat-label">本周积分</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 每日健康打卡 -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3><i class="fas fa-calendar-check"></i> 每日健康打卡</h3>
+                        <div id="checkin-status" style="margin-bottom:15px;"></div>
+                        <div id="checkin-form" style="display:none;">
+                            <!-- 得分预览 -->
+                            <div style="text-align:center;padding:16px;background:rgba(16,185,129,0.06);border-radius:12px;margin-bottom:16px;">
+                                <div style="font-size:12px;color:var(--text-muted);margin-bottom:4px;">今日预估得分</div>
+                                <div style="font-size:36px;font-weight:700;color:var(--primary-lighter);" id="checkin-score-preview">0</div>
+                                <div style="font-size:12px;color:var(--text-muted);">/ 100 分</div>
+                            </div>
+
+                            <!-- 三餐打卡 -->
+                            <div style="margin-bottom:16px;">
+                                <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);">
+                                    <i class="fas fa-utensils" style="color:var(--primary);"></i> 三餐打卡（共45分）
+                                </div>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+                                    <label class="checkin-task" id="task-breakfast">
+                                        <input type="checkbox" id="checkin-breakfast" onchange="app.updateCheckinScore()">
+                                        <div class="checkin-task-content">
+                                            <i class="fas fa-sun" style="color:#f59e0b;font-size:20px;"></i>
+                                            <span>早餐</span>
+                                            <span class="checkin-task-score">+15分</span>
+                                        </div>
+                                    </label>
+                                    <label class="checkin-task" id="task-lunch">
+                                        <input type="checkbox" id="checkin-lunch" onchange="app.updateCheckinScore()">
+                                        <div class="checkin-task-content">
+                                            <i class="fas fa-cloud-sun" style="color:#3b82f6;font-size:20px;"></i>
+                                            <span>午餐</span>
+                                            <span class="checkin-task-score">+15分</span>
+                                        </div>
+                                    </label>
+                                    <label class="checkin-task" id="task-dinner">
+                                        <input type="checkbox" id="checkin-dinner" onchange="app.updateCheckinScore()">
+                                        <div class="checkin-task-content">
+                                            <i class="fas fa-moon" style="color:#8b5cf6;font-size:20px;"></i>
+                                            <span>晚餐</span>
+                                            <span class="checkin-task-score">+15分</span>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- 运动打卡 -->
+                            <div style="margin-bottom:16px;">
+                                <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);">
+                                    <i class="fas fa-running" style="color:#10b981;"></i> 运动打卡（最高20分）
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <input type="range" id="checkin-exercise" min="0" max="60" value="0" 
+                                           style="flex:1;" oninput="app.updateCheckinScore()">
+                                    <div style="min-width:80px;text-align:right;">
+                                        <span style="font-size:16px;font-weight:600;" id="exercise-value">0</span>
+                                        <span style="font-size:12px;color:var(--text-muted);">分钟</span>
+                                    </div>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                                    <span>0分钟</span>
+                                    <span>15分钟(+15分)</span>
+                                    <span>30分钟(+20分)</span>
+                                </div>
+                            </div>
+
+                            <!-- 饮水打卡 -->
+                            <div style="margin-bottom:16px;">
+                                <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);">
+                                    <i class="fas fa-tint" style="color:#06b6d4;"></i> 饮水打卡（最高15分）
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <input type="range" id="checkin-water" min="0" max="12" value="0" 
+                                           style="flex:1;" oninput="app.updateCheckinScore()">
+                                    <div style="min-width:60px;text-align:right;">
+                                        <span style="font-size:16px;font-weight:600;" id="water-value">0</span>
+                                        <span style="font-size:12px;color:var(--text-muted);">杯</span>
+                                    </div>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                                    <span>0杯</span>
+                                    <span>5杯(+10分)</span>
+                                    <span>8杯(+15分)</span>
+                                </div>
+                            </div>
+
+                            <!-- 睡眠打卡 -->
+                            <div style="margin-bottom:16px;">
+                                <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);">
+                                    <i class="fas fa-bed" style="color:#8b5cf6;"></i> 睡眠打卡（最高10分）
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <input type="range" id="checkin-sleep" min="0" max="12" step="0.5" value="7" 
+                                           style="flex:1;" oninput="app.updateCheckinScore()">
+                                    <div style="min-width:60px;text-align:right;">
+                                        <span style="font-size:16px;font-weight:600;" id="sleep-value">7</span>
+                                        <span style="font-size:12px;color:var(--text-muted);">小时</span>
+                                    </div>
+                                </div>
+                                <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-top:4px;">
+                                    <span>0小时</span>
+                                    <span>7-9小时(+10分)</span>
+                                    <span>12小时</span>
+                                </div>
+                            </div>
+
+                            <!-- 心情打卡 -->
+                            <div style="margin-bottom:16px;">
+                                <div style="font-size:14px;font-weight:600;margin-bottom:8px;color:var(--text);">
+                                    <i class="fas fa-smile" style="color:#f59e0b;"></i> 心情打卡（最高10分）
+                                </div>
+                                <div style="display:flex;gap:8px;">
+                                    <button type="button" class="mood-btn" data-mood="2" onclick="app.setMood(2)">😫</button>
+                                    <button type="button" class="mood-btn" data-mood="4" onclick="app.setMood(4)">😐</button>
+                                    <button type="button" class="mood-btn" data-mood="6" onclick="app.setMood(6)">🙂</button>
+                                    <button type="button" class="mood-btn active" data-mood="8" onclick="app.setMood(8)">😊</button>
+                                    <button type="button" class="mood-btn" data-mood="10" onclick="app.setMood(10)">😄</button>
+                                </div>
+                                <input type="hidden" id="checkin-mood" value="8">
+                            </div>
+
+                            <!-- 备注 -->
+                            <div class="form-group" style="margin-bottom:16px;">
+                                <textarea id="checkin-notes" rows="2" placeholder="今日备注（可选）..." 
+                                          style="width:100%;padding:10px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;resize:none;font-family:inherit;"></textarea>
+                            </div>
+
+                            <button onclick="app.performCheckin()" class="btn-primary" style="width:100%;">
+                                <i class="fas fa-check"></i> 提交打卡
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 打卡日历 -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3><i class="fas fa-calendar-alt"></i> 打卡日历</h3>
+                        <div id="checkin-calendar" style="margin-top:12px;"></div>
+                    </div>
+
+                    <!-- 我的成就 -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3><i class="fas fa-medal"></i> 我的成就</h3>
+                        <div id="achievements-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:15px;"></div>
+                    </div>
+
+                                        <div class="section-divider">
+                        <img src="img/divider-deco.jpg" alt="" class="divider-img">
+                    </div>
+
+                    <!-- 积分获取渠道 -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3><i class="fas fa-tasks"></i> 积分获取渠道</h3>
+                        <div id="reward-actions-list" style="margin-top:15px;"></div>
+                    </div>
+
+                    <!-- 积分商城 -->
+                    <div class="card" style="margin-top:20px;">
+                        <h3><i class="fas fa-store"></i> 积分商城</h3>
+                        <div class="points-progress">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <span style="font-size:13px;color:var(--text-light);">我的积分</span>
+                                <span style="font-size:16px;font-weight:700;color:var(--accent-light);" id="shop-user-points">0</span>
+                            </div>
+                            <div class="points-progress-bar">
+                                <div class="points-progress-fill" id="points-progress-fill" style="width:0%;"></div>
+                            </div>
+                            <small style="color:var(--text-muted);font-size:12px;">累计300积分解锁「健康达人徽章」</small>
+                        </div>
+                        <div class="shop-grid" id="shop-grid" style="margin-top:20px;"></div>
+                    </div>
+
+                    <!-- 积分记录和排行榜 -->
+                    <div class="rewards-container" style="margin-top:20px;">
+                        <div class="card">
+                            <h3><i class="fas fa-list"></i> 积分记录</h3>
+                            <div id="reward-history" class="history-list"></div>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-crown"></i> 积分排行榜</h3>
+                            <div id="reward-leaderboard" class="leaderboard-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========== 隐私设置页 ========== -->
+                <div id="page-privacy" class="content-page">
+                    <div class="page-header" data-help-page="privacy">
+                        <h2><i class="fas fa-shield-halved"></i> 隐私与安全</h2>
+                        <p>管理你的数据隐私设置</p>
+                    </div>
+                    <div class="privacy-container">
+                        <div class="card">
+                            <h3><i class="fas fa-bell"></i> 心理预警设置</h3>
+                            <div class="privacy-option">
+                                <div class="option-info">
+                                    <h4>开启心理预警</h4>
+                                    <p>当系统检测到心理状态评分低于60分时，匿名通知辅导员关注</p>
+                                </div>
+                                <label class="toggle">
+                                    <input type="checkbox" id="privacy-alert" onchange="app.updatePrivacy()">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-database"></i> 数据管理</h3>
+                            <div class="privacy-actions">
+                                <button onclick="app.exportData()" class="btn-secondary">
+                                    <i class="fas fa-download"></i> 导出健康档案
+                                </button>
+                                <button onclick="app.deleteAccount()" class="btn-danger">
+                                    <i class="fas fa-trash"></i> 删除账户数据
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3><i class="fas fa-lock"></i> 安全措施</h3>
+                            <ul class="security-list">
+                                <li><i class="fas fa-check-circle"></i> 敏感数据加密存储</li>
+                                <li><i class="fas fa-check-circle"></i> 预警信息脱敏处理</li>
+                                <li><i class="fas fa-check-circle"></i> 用户有权删除个人数据</li>
+                                <li><i class="fas fa-check-circle"></i> 健康档案仅本人可见</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- ==================== 底部导航栏（移动端） ==================== -->
+        <nav class="bottom-nav">
+            <a href="#" class="bottom-nav-item active" data-page="chat" onclick="app.switchPage('chat');return false;">
+                <i class="fas fa-comments"></i>
+                <span>小艺</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="mental" onclick="app.switchPage('mental');return false;">
+                <i class="fas fa-brain"></i>
+                <span>心理</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="tcm" onclick="app.switchPage('tcm');return false;">
+                <i class="fas fa-utensils"></i>
+                <span>膳食</span>
+            </a>
+            <a href="#" class="bottom-nav-item" data-page="diagnosis" onclick="app.switchPage('diagnosis');return false;">
+                <i class="fas fa-stethoscope"></i>
+                <span>问诊</span>
+            </a>
+            <a href="#" class="bottom-nav-item" onclick="app.toggleMoreMenu();return false;">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>更多</span>
+            </a>
+        </nav>
+
+        <!-- 更多菜单 -->
+        <div class="more-menu-overlay" id="more-menu-overlay" onclick="app.toggleMoreMenu()"></div>
+        <div class="more-menu" id="more-menu">
+            <div class="more-menu-header">
+                <h3>更多功能</h3>
+                <button class="close-btn" onclick="app.toggleMoreMenu()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="more-menu-grid">
+                <a href="#" class="more-menu-item" onclick="app.switchPage('tcm');app.toggleMoreMenu();return false;">
+                    <i style="background:linear-gradient(135deg,#0d9488,#14b8a6);"><i class="fas fa-yin-yang"></i></i>
+                    <span>中医体质</span>
+                </a>
+                <a href="#" class="more-menu-item" onclick="app.switchPage('community');app.toggleMoreMenu();return false;">
+                    <i style="background:linear-gradient(135deg,#0d9488,#14b8a6);"><i class="fas fa-newspaper"></i></i>
+                    <span>健康资讯</span>
+                </a>
+                <a href="#" class="more-menu-item" onclick="app.switchPage('rewards');app.toggleMoreMenu();return false;">
+                    <i style="background:linear-gradient(135deg,#f59e0b,#fbbf24);"><i class="fas fa-trophy"></i></i>
+                    <span>积分商城</span>
+                </a>
+                <a href="#" class="more-menu-item" onclick="app.switchPage('privacy');app.toggleMoreMenu();return false;">
+                    <i style="background:linear-gradient(135deg,#6366f1,#818cf8);"><i class="fas fa-shield-halved"></i></i>
+                    <span>隐私设置</span>
+                </a>
+                <a href="#" class="more-menu-item" onclick="app.toggleTheme();app.toggleMoreMenu();return false;">
+                    <i style="background:linear-gradient(135deg,#a855f7,#c084fc);" id="theme-icon"><i class="fas fa-moon"></i></i>
+                    <span id="theme-text">暗色模式</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 浮动数字人（透明背景人物形象，交互时自动切换动作） -->
+    <div id="floating-avatar" class="floating-avatar" onclick="app.onAvatarClick()">
+        <img id="mascot-img" src="img/mascot_idle.png" alt="AI小艺" class="floating-avatar-img">
+        <span class="avatar-tooltip">找小艺</span>
+    </div>
+    
+    <!-- 语音播放状态指示器 -->
+    <div id="speech-indicator" class="speech-indicator" style="display:none;">
+        <div class="speech-wave">
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <span class="speech-text">Playing...</span>
+        <button onclick="app.stopSpeech()" class="speech-stop-btn">
+            <i class="fas fa-stop"></i>
+        </button>
+    </div>
+
+    <!-- 加载动画 -->
+    <div id="loading-overlay" class="loading-overlay" style="display:none">
+        <div class="loading-spinner">
+            <i class="fas fa-circle-notch fa-spin"></i>
+            <p>思考中...</p>
+        </div>
+    </div>
+
+    <!-- 医案库模态框 -->
+    <div id="case-library-modal" class="case-library-modal" onclick="app.closeCaseLibraryModal(event)">
+        <div class="case-library-modal-content" id="case-library-modal-content"></div>
+    </div>
+
+    <!-- 医案详情模态框 -->
+    <div id="case-modal" class="case-modal" onclick="app.closeCaseModal(event)">
+        <div class="case-modal-content" id="case-modal-content"></div>
+    </div>
+
+    <!-- 资讯详情模态框 -->
+    <div id="feed-modal" class="feed-modal" onclick="app.closeFeedModal(event)">
+        <div class="feed-modal-content" id="feed-modal-content"></div>
+    </div>
+
+    <script src="js/help_tooltips.js"></script>
+    <script src="js/app.js?v=20260826a"></script>
+<!-- 浮动粒子动画背景 -->
+<div class="particles-container" id="particles-container">
+    <!-- 粒子将由JS动态生成 -->
+</div>
+<!-- 顶部装饰光带 -->
+<div class="top-glow-line"></div>
+</body>
+</html>
